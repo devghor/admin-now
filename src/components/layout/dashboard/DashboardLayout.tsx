@@ -30,7 +30,7 @@ export default function DashboardLayout(props: Props) {
     <div>
       <Toolbar>
         <Box component="div">
-          <img src="/vercel.svg" alt="logo" height={'30px'} />
+          <img src="/logo.png" alt="logo" height={'45px'} />
         </Box>
       </Toolbar>
       <Divider />
