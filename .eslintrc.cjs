@@ -25,5 +25,8 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'react/require-default-props': 0,
     'react/no-array-index-key': 0,
+    'import/prefer-default-export': 0,
+    'react/function-component-definition': 0,
+    'jsx-a11y/anchor-is-valid': 0,
   },
 }

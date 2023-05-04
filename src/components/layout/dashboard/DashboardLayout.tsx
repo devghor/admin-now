@@ -7,6 +7,7 @@ import Toolbar from '@mui/material/Toolbar'
 import { Outlet } from 'react-router-dom'
 import MainMenu from './MainMenu'
 import TopBar from './TopBar'
+import { MuiToolbar } from '../../ui/toolbar'
 
 const drawerWidth = 240
 
@@ -28,11 +29,11 @@ export default function DashboardLayout(props: Props) {
 
   const drawer = (
     <div>
-      <Toolbar>
-        <Box component="div">
-          <img src="/logo.png" alt="logo" height="45px" />
+      <MuiToolbar>
+        <Box component="h4" sx={{ textAlign: 'center', width: '100%' }}>
+          ADMIN NOW
         </Box>
-      </Toolbar>
+      </MuiToolbar>
       <Divider />
       <MainMenu />
     </div>
@@ -91,7 +92,7 @@ export default function DashboardLayout(props: Props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <Toolbar />
+        <MuiToolbar />
         <Outlet />
       </Box>
     </Box>

@@ -1,19 +1,19 @@
-import { Box, Breadcrumbs, Link, Typography } from '@mui/material';
-import React from 'react';
-import { PagePath } from '../../../types';
-import { useNavigate } from 'react-router-dom';
+import { Box, Breadcrumbs, Link, Typography } from '@mui/material'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { PagePath } from '../../../types'
 
 interface Props {
-  title: string;
-  paths?: PagePath[];
-  rightSection?: React.ReactElement;
+  title: string
+  paths?: PagePath[]
+  rightSection?: React.ReactElement
 }
 
 export const PageHeader = ({ title, paths, rightSection }: Props) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const handleClick = (path: any) => {
-    navigate(path);
-  };
+    navigate(path)
+  }
   return (
     <Box
       sx={{
@@ -25,17 +25,15 @@ export const PageHeader = ({ title, paths, rightSection }: Props) => {
       }}
     >
       <Box>
-        <Typography variant="h4" component="div">
-          {title}
-        </Typography>
+        <Typography variant="h2">{title}</Typography>
         <div>
           <Breadcrumbs aria-label="breadcrumb" separator="›">
             {paths?.map((item, i) => {
               return (
                 <div key={i}>
-                  {paths.length - 1 == i ? (
+                  {paths.length - 1 === i ? (
                     <Link
-                      component={'button'}
+                      component="button"
                       underline="hover"
                       color="text.primary"
                       href={item.path}
@@ -44,7 +42,7 @@ export const PageHeader = ({ title, paths, rightSection }: Props) => {
                     </Link>
                   ) : (
                     <Link
-                      component={'button'}
+                      component="button"
                       underline="hover"
                       color="inherit"
                       onClick={() => handleClick(item.path)}
@@ -53,12 +51,12 @@ export const PageHeader = ({ title, paths, rightSection }: Props) => {
                     </Link>
                   )}
                 </div>
-              );
+              )
             })}
           </Breadcrumbs>
         </div>
       </Box>
       <Box>{rightSection}</Box>
     </Box>
-  );
-};
+  )
+}

@@ -1,62 +1,102 @@
-import { PaletteMode, ThemeProvider } from '@mui/material';
-import { purple, red } from '@mui/material/colors';
-import { createTheme } from '@mui/material/styles';
-import React from 'react';
-import typography from './typography';
-import GlobalStyles from './GlobalStyles';
+import { PaletteMode, ThemeProvider } from '@mui/material'
+import { createTheme } from '@mui/material/styles'
+import React from 'react'
+import typography from './typography'
+import shadows from './shadows'
 
-export const COLOR_PRIMARY_MAIN = red['500'];
-export const COLOR_SECONDARY_MAIN = '#19857b';
+export const COLOR_PRIMARY_MAIN = '#E51A4C'
+export const COLOR_SECONDARY_MAIN = '#19857b'
 
-const lightPalette = {
-  primary: {
-    main: COLOR_PRIMARY_MAIN,
-  },
-  secondary: {
-    main: COLOR_SECONDARY_MAIN,
-  },
-};
-
-const darkPalette = {};
-
-const getDesignTokens = (mode: PaletteMode) => ({
+const lightThemeConfig = {
   palette: {
-    mode,
-    ...(mode === 'light' ? lightPalette : darkPalette),
+    mode: 'light' as PaletteMode,
+    primary: {
+      main: COLOR_PRIMARY_MAIN,
+    },
+    secondary: {
+      main: COLOR_SECONDARY_MAIN,
+    },
+    neutral: {
+      main: '#fff',
+      contrastText: '#fff',
+    },
+    background: {
+      default: '#f1f5f9',
+    },
   },
-  shape: { borderRadius: 6 },
+  shape: { borderRadius: 6, ...shadows },
   typography: {
     ...typography,
   },
-});
+  components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: COLOR_PRIMARY_MAIN,
+          color: '#fff',
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        dense: {
+          height: 48,
+          minHeight: 48,
+        },
+      },
+    },
+  },
+}
+
+const darkThemeConfig = {
+  palette: {
+    mode: 'dark' as PaletteMode,
+  },
+  typography: {
+    ...typography,
+  },
+  components: {
+    MuiToolbar: {
+      styleOverrides: {
+        dense: {
+          height: 48,
+          minHeight: 48,
+        },
+      },
+    },
+  },
+}
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
-});
+})
 
 type Props = {
-  children: React.ReactElement;
-};
+  children: React.ReactElement
+}
 
-export const MuiThemeProvider = ({ children }: Props) => {
-  const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+export function MuiThemeProvider({ children }: Props) {
+  const [mode, setMode] = React.useState<'light' | 'dark'>('light')
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
       },
     }),
     []
-  );
+  )
 
-  const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        ...(mode === 'light' ? lightThemeConfig : darkThemeConfig),
+      }),
+    [mode]
+  )
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        {children}
-      </ThemeProvider>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </ColorModeContext.Provider>
-  );
-};
+  )
+}

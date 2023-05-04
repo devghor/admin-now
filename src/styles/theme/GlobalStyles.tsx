@@ -1,5 +1,5 @@
 // @mui
-import { GlobalStyles as MUIGlobalStyles } from '@mui/material';
+import { GlobalStyles as MUIGlobalStyles } from '@mui/material'
 
 export default function GlobalStyles() {
   const inputGlobalStyles = (
@@ -48,7 +48,7 @@ export default function GlobalStyles() {
         },
       }}
     />
-  );
+  )
 
-  return inputGlobalStyles;
+  return inputGlobalStyles
 }

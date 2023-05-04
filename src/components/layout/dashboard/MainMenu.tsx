@@ -15,16 +15,25 @@ import { useNavigate } from 'react-router-dom'
 import { pathConstant } from '../../../constants'
 
 const items = [
-  { icon: <DashboardOutlined />, ...pathConstant.DASHBOARD },
   {
-    icon: <ListAltOutlined />,
+    icon: <DashboardOutlined sx={{ color: '#fff' }} />,
+    ...pathConstant.DASHBOARD,
+  },
+  {
+    icon: <ListAltOutlined sx={{ color: '#fff' }} />,
     label: 'Acl',
     path: '#',
     sub: [
-      { icon: <StarOutline />, ...pathConstant.ACL_ROLES },
-      { icon: <StarOutline />, ...pathConstant.ACL_USER_ROLES },
       {
-        icon: <StarOutline />,
+        icon: <StarOutline sx={{ color: '#fff' }} />,
+        ...pathConstant.ACL_ROLES,
+      },
+      {
+        icon: <StarOutline sx={{ color: '#fff' }} />,
+        ...pathConstant.ACL_USER_ROLES,
+      },
+      {
+        icon: <StarOutline sx={{ color: '#fff' }} />,
         ...pathConstant.ACL_PERMISSIONS,
       },
     ],
