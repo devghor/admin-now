@@ -1,19 +1,21 @@
-import { Login, Register } from '../pages/auth';
-import { Home } from '../pages/home';
-import Guard from './Guard';
-import DashboardLayout from '../components/layout/dashboard/DashboardLayout';
-import AuthLayout from '../components/layout/auth/AuthLayout';
-import ErrorPage from '../components/page/ErrorPage';
-import NotFoundPage from '../components/page/NotFoundPage';
-import { pathConstant } from '../constants';
-import { Permissions, Roles } from '../pages/acl';
-
-
+import { Login, Register } from '../pages/auth'
+import { Home } from '../pages/home'
+import Guard from './Guard'
+import DashboardLayout from '../components/layout/dashboard/DashboardLayout'
+import AuthLayout from '../components/layout/auth/AuthLayout'
+import ErrorPage from '../components/page/ErrorPage'
+import NotFoundPage from '../components/page/NotFoundPage'
+import { pathConstant } from '../constants'
+import { Permissions, Roles } from '../pages/acl'
 
 const routes = [
   {
     path: '/',
-    element:<Guard><DashboardLayout /></Guard> ,
+    element: (
+      <Guard>
+        <DashboardLayout />
+      </Guard>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
@@ -49,6 +51,6 @@ const routes = [
     path: '*',
     element: <NotFoundPage />,
   },
-];
+]
 
-export default routes;
+export default routes

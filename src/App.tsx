@@ -1,8 +1,8 @@
-import Router from './router';
-import { Provider } from 'react-redux';
-import store from './store';
-import { Toaster } from 'react-hot-toast';
-import { MuiThemeProvider } from './styles/theme';
+import { Provider } from 'react-redux'
+import { Toaster } from 'react-hot-toast'
+import { MuiThemeProvider } from './styles/theme'
+import Router from './router'
+import store from './store'
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         </MuiThemeProvider>
       </Provider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
