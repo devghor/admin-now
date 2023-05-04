@@ -1,17 +1,18 @@
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+import * as React from 'react'
+import List from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Collapse from '@mui/material/Collapse'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 import {
   DashboardOutlined,
   ListAltOutlined,
   StarOutline,
-} from '@mui/icons-material';
-import { pathConstant } from '../../../constants';
+} from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
+import { pathConstant } from '../../../constants'
 
 const items = [
   { icon: <DashboardOutlined />, ...pathConstant.DASHBOARD },
@@ -28,7 +29,7 @@ const items = [
       },
     ],
   },
-];
+]
 
 const ListItem = ({
   icon,
@@ -36,16 +37,16 @@ const ListItem = ({
   children,
   path,
 }: {
-  icon?: React.ReactElement;
-  label?: string;
-  children?: any;
-  path?: any;
+  icon?: React.ReactElement
+  label?: string
+  children?: any
+  path?: any
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
 
   const handleClick = () => {
-    setOpen(!open);
-  };
+    setOpen(!open)
+  }
 
   const item = children ? (
     <div>
@@ -65,11 +66,19 @@ const ListItem = ({
       <ListItemIcon>{icon}</ListItemIcon>
       <ListItemText primary={label} />
     </ListItemButton>
-  );
-  return item;
-};
+  )
+  return item
+}
 
 export default function MainMenu() {
+  const navigate = useNavigate()
+
+  const handleBtnClick = (path: string | undefined) => {
+    if (path !== undefined && path !== null) {
+      navigate(path)
+    }
+  }
+
   return (
     <List sx={{ width: '100%', maxWidth: 360 }} component="nav">
       {items.map((item, j) => {
@@ -78,25 +87,26 @@ export default function MainMenu() {
             <ListItem key={j} label={item.label} icon={item.icon}>
               {item.sub.map((subItem: any, i) => {
                 return (
-                  <ListItemButton key={i} sx={{ pl: 4 }} href={subItem.path}>
+                  <ListItemButton
+                    key={i}
+                    sx={{ pl: 4 }}
+                    onClick={() => handleBtnClick(subItem.path)}
+                  >
                     <ListItemIcon>{subItem.icon}</ListItemIcon>
                     <ListItemText primary={subItem.label} />
                   </ListItemButton>
-                );
+                )
               })}
             </ListItem>
-          );
-        } else {
-          return (
-            <ListItem
-              key={j}
-              path={item.path}
-              label={item.label}
-              icon={item.icon}
-            />
-          );
+          )
         }
+        return (
+          <ListItemButton key={j} onClick={() => handleBtnClick(item.path)}>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.label} />
+          </ListItemButton>
+        )
       })}
     </List>
-  );
+  )
 }
