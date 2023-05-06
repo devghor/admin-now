@@ -13,9 +13,18 @@ interface Props {
   data: any
   columns: any
   page?: any
+  total?: number
+  perPage?: number
 }
 
-const AdvanceDataTable = ({ title, columns, data, page }: Props) => {
+const AdvanceDataTable = ({
+  title,
+  columns,
+  data,
+  page,
+  total,
+  perPage,
+}: Props) => {
   const [responsive, setResponsive] = useState('simple')
   const [tableBodyHeight, setTableBodyHeight] = useState('400px')
   const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState('')
@@ -35,10 +44,10 @@ const AdvanceDataTable = ({ title, columns, data, page }: Props) => {
     responsive,
     // tableBodyHeight,
     // tableBodyMaxHeight,
-    rowsPerPage: 5,
+    rowsPerPage: perPage,
     rowsPerPageOptions: [5],
     serverSide: true,
-    count: 20, // Unknown number of items
+    count: total,
     page,
     elevation: 0,
     onTableChange: (action: any, state: any) => {

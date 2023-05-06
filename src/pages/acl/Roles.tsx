@@ -8,7 +8,9 @@ import { httpClient } from '../../lib'
 
 const Roles = () => {
   const [data, setData] = useState<any>([])
-  const [page, setPage] = useState<number>(1)
+  const [page, setPage] = useState<number>(0)
+  const [total, setTotal] = useState<number>()
+  const [perPage, setPerPage] = useState<number>(10)
   const columns = [
     { name: 'id', label: 'ID' },
     { name: 'title', label: 'Name' },
@@ -17,10 +19,13 @@ const Roles = () => {
     { name: 'brand', label: 'Brand' },
   ]
 
-  useEffect(() => {
+  const fetchData = () => {
     httpClient
-      .get('/products')
+      .get(`/products?limit=${perPage}&skip=${page}`)
       .then((res: any) => {
+        setTotal(res.data.total)
+        setPage(res.data.skip)
+        setPerPage(res.data.limit)
         const resData = res.data.products.map((item: any) => {
           return { ...item }
         })
@@ -30,7 +35,12 @@ const Roles = () => {
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [])
+
   return (
     <>
       <PageHeader
@@ -41,7 +51,13 @@ const Roles = () => {
       <div>
         <Grid container>
           <Grid item md={12}>
-            <AdvanceDataTable columns={columns} data={data} page={page} />
+            <AdvanceDataTable
+              columns={columns}
+              data={data}
+              page={page}
+              perPage={perPage}
+              total={total}
+            />
           </Grid>
         </Grid>
       </div>
