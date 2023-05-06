@@ -43,6 +43,10 @@ const Roles = () => {
       })
   }
 
+  const handleTableChange = (action: any, tableState: any) => {
+    console.log(action, tableState)
+  }
+
   useEffect(() => {
     fetchData()
   }, [])
@@ -64,6 +68,7 @@ const Roles = () => {
               perPage={perPage}
               total={total}
               loading={loading}
+              onTableChange={handleTableChange}
             />
           </Grid>
         </Grid>

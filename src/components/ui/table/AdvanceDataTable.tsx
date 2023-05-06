@@ -17,6 +17,7 @@ interface Props {
   total?: number
   perPage?: number
   loading?: boolean
+  onTableChange?: (action: any, tableState: any) => void
 }
 
 const AdvanceDataTable = ({
@@ -27,6 +28,7 @@ const AdvanceDataTable = ({
   total,
   perPage,
   loading,
+  onTableChange,
 }: Props) => {
   const [responsive, setResponsive] = useState('simple')
   const [tableBodyHeight, setTableBodyHeight] = useState('400px')
@@ -54,8 +56,7 @@ const AdvanceDataTable = ({
     page,
     elevation: 0,
     onTableChange: (action: any, state: any) => {
-      console.log(action)
-      console.dir(state)
+      onTableChange(action, state)
     },
   } as MUIDataTableOptions
 
