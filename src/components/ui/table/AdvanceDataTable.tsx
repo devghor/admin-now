@@ -2,6 +2,7 @@ import MUIDataTable, { MUIDataTableOptions } from 'mui-datatables'
 import React, { useMemo, useState } from 'react'
 import createCache from '@emotion/cache'
 import { CacheProvider } from '@emotion/react'
+import { CircularProgress, Typography } from '@mui/material'
 
 const muiCache = createCache({
   key: 'mui-datatables',
@@ -15,6 +16,7 @@ interface Props {
   page?: any
   total?: number
   perPage?: number
+  loading?: boolean
 }
 
 const AdvanceDataTable = ({
@@ -24,6 +26,7 @@ const AdvanceDataTable = ({
   page,
   total,
   perPage,
+  loading,
 }: Props) => {
   const [responsive, setResponsive] = useState('simple')
   const [tableBodyHeight, setTableBodyHeight] = useState('400px')
@@ -59,7 +62,22 @@ const AdvanceDataTable = ({
   return (
     <CacheProvider value={muiCache}>
       <MUIDataTable
-        title={title && ''}
+        title={
+          <Typography variant="h6">
+            {title}
+            {loading && (
+              <CircularProgress
+                size={24}
+                style={{
+                  marginLeft: 15,
+                  position: 'relative',
+                  top: 4,
+                  color: 'red',
+                }}
+              />
+            )}
+          </Typography>
+        }
         data={data}
         columns={columns}
         options={options}
