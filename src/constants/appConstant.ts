@@ -4,4 +4,4 @@ export default {
   redirectUrlKey: 'redirectUrl',
   authenticatedEntryPath: '/',
   unAuthenticatedEntryPath: '/login',
-};
+}

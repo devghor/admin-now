@@ -28,5 +28,6 @@ module.exports = {
     'import/prefer-default-export': 0,
     'react/function-component-definition': 0,
     'jsx-a11y/anchor-is-valid': 0,
+    'react-hooks/exhaustive-deps': 0,
   },
 }

@@ -1,4 +1,1 @@
-export default {
-  admin: 'admin',
-  user: 'user',
-};
+export const ROLE_KEY_ADMIN = 'admin'

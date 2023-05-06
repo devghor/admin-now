@@ -10,4 +10,4 @@ export default {
   loginPost: '/login',
   registerPost: '/register',
   logoutPost: '/logout',
-};
+}
