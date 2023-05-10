@@ -2,7 +2,12 @@ import MUIDataTable, { MUIDataTableOptions } from 'mui-datatables'
 import React, { useMemo, useState } from 'react'
 import createCache from '@emotion/cache'
 import { CacheProvider } from '@emotion/react'
-import { CircularProgress, Typography } from '@mui/material'
+import {
+  Box,
+  CircularProgress,
+  LinearProgress,
+  Typography,
+} from '@mui/material'
 
 const muiCache = createCache({
   key: 'mui-datatables',
@@ -13,11 +18,11 @@ interface Props {
   title?: any
   data: any
   columns: any
-  page?: any
   total?: number
+  page?: any
   perPage?: number
   loading?: boolean
-  onTableChange?: (action: any, tableState: any) => void
+  onTableChange?: (tableState: object) => void
 }
 
 const AdvanceDataTable = ({
@@ -37,7 +42,7 @@ const AdvanceDataTable = ({
   const [downloadBtn, setDownloadBtn] = useState(false)
   const [printBtn, setPrintBtn] = useState(false)
   const [viewColumnBtn, setViewColumnBtn] = useState(false)
-  const [filterBtn, setFilterBtn] = useState(false)
+  const [filterBtn, setFilterBtn] = useState(true)
 
   const options = {
     search: searchBtn,
@@ -49,36 +54,28 @@ const AdvanceDataTable = ({
     responsive,
     // tableBodyHeight,
     // tableBodyMaxHeight,
-    rowsPerPage: perPage,
-    rowsPerPageOptions: [5],
+    rowsPerPage: perPage || 5,
+    rowsPerPageOptions: [5, 10, 20],
     serverSide: true,
     count: total,
-    page,
+    page: page || 0,
     elevation: 0,
-    onTableChange: (action: any, state: any) => {
-      onTableChange(action, state)
+    onTableChange: (action: string, tableState: object) => {
+      if (onTableChange) {
+        onTableChange(tableState)
+      }
     },
   } as MUIDataTableOptions
 
   return (
     <CacheProvider value={muiCache}>
+      {loading && (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
+        </Box>
+      )}
       <MUIDataTable
-        title={
-          <Typography variant="h6">
-            {title}
-            {loading && (
-              <CircularProgress
-                size={24}
-                style={{
-                  marginLeft: 15,
-                  position: 'relative',
-                  top: 4,
-                  color: 'red',
-                }}
-              />
-            )}
-          </Typography>
-        }
+        title={<Typography variant="h6">{title}</Typography>}
         data={data}
         columns={columns}
         options={options}

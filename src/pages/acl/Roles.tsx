@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Box, Button, Grid, IconButton, Tooltip } from '@mui/material'
 import { Delete, Edit } from '@mui/icons-material'
 import { PageHeader } from '../../components/ui/page/PageHeader'
 import { apiConstant, pathConstant } from '../../constants'
 import { AdvanceDataTable } from '../../components/ui/table'
 import { httpClient } from '../../lib'
-import { setLoading } from '../../store/slices/auth/authSlice'
 
 const Roles = () => {
   const [data, setData] = useState<any>([])
   const [page, setPage] = useState<number>(0)
-  const [total, setTotal] = useState<number>()
+  const [total, setTotal] = useState<number>(0)
   const [perPage, setPerPage] = useState<number>(10)
-  const [loading, setloading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const columns = [
     { name: 'id', label: 'ID' },
     { name: 'title', label: 'Name' },
@@ -24,32 +23,37 @@ const Roles = () => {
   const fetchData = () => {
     setLoading(true)
     httpClient
-      .get(`/products?limit=${perPage}&skip=${page}`)
+      .get(`/user?limit=${perPage}&page=${page}`)
       .then((res: any) => {
         setTotal(res.data.total)
-        setPage(res.data.skip)
-        setPerPage(res.data.limit)
-        const resData = res.data.products.map((item: any) => {
+        const resData = res.data.data.map((item: any) => {
           return { ...item }
         })
-        console.log(resData)
         setData(resData)
       })
       .catch((err) => {
         console.log(err)
       })
       .finally(() => {
-        setloading(false)
+        setLoading(false)
       })
-  }
-
-  const handleTableChange = (action: any, tableState: any) => {
-    console.log(action, tableState)
   }
 
   useEffect(() => {
     fetchData()
   }, [])
+
+  useMemo(() => {
+    if (page || perPage) {
+      fetchData()
+    }
+  }, [page, perPage])
+
+  const handleTableChange = (state: any) => {
+    console.log(state)
+    setPerPage(state.rowsPerPage)
+    setPage(state.page)
+  }
 
   return (
     <>
